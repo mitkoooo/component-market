@@ -20,9 +20,12 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex justify-center text-[#005b90] mx-auto my-20">
-        <Link href="/about" className="text-lg font-semibold">
-          Learn more{" "}
+      <div className="flex justify-center  text-[#005b90] mx-auto my-20">
+        <Link
+          href="/about"
+          className="text-lg font-semibold hover:font-bold transition ease-in-out hover:-translate-y-1 delay-15 duration-300"
+        >
+          <span>Learn more</span>
         </Link>
       </div>
     </div>
