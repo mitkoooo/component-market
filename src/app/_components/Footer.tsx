@@ -9,7 +9,7 @@ const Footer = (): React.JSX.Element => {
         <li className="py-1">©{getYear(new Date())} by Vadim Mitko </li>
         <li>
           <Link href="https://github.com/mitkoooo">
-            <GithubLogo height="auto" width="auto" />
+            <GithubLogo height="32" width="32" />
           </Link>
         </li>
       </ul>

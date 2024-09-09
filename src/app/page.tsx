@@ -1,10 +1,14 @@
+"use client";
 import { Leaf } from "lucide-react";
 import Link from "next/link";
+import useAddStyleHeaderWithScroll from "./_hooks/useAddStyleHeaderWithScroll";
 
 export default function Page() {
+  const ref = useAddStyleHeaderWithScroll("border-b-2 border-gray-100");
+
   return (
-    <div className="min-h-screen h-full font-sans">
-      <div className="pt-20 sm:pt-28 max-w-4xl mx-auto text-center">
+    <div ref={ref} className="h-screen font-sans">
+      <div className="mx-auto pt-10 sm:pt-26 md:pt-44 max-w-4xl  text-center w-full">
         <h1 className="text-4xl sm:text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600 pb-1 mb-6">
           Home-grown components
         </h1>

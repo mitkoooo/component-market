@@ -3,11 +3,7 @@
 import { AlignRight, Menu } from "lucide-react";
 import { useState } from "react";
 
-type BurgerMenuProps = {
-  message: string;
-}; /* use `interface` if exporting so that consumers can extend */
-
-const BurgerMenu = ({ message }: BurgerMenuProps): React.JSX.Element => {
+const BurgerMenu = (): React.JSX.Element => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
