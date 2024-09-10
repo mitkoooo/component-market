@@ -27,7 +27,7 @@ const BurgerMenu = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={() => onIsOpenBurger((state) => !state)}
-      className="z-10 relative h-[30px] w-[30px] mt-1 mr-14 overflow-hidden  bg-white"
+      className="z-10 relative h-[30px] w-[30px] overflow-hidden  bg-white"
     >
       <span
         className={` absolute top-0 right-0 left-0 bottom-0 transition ease-in-out duration-150 origin-top-left ${

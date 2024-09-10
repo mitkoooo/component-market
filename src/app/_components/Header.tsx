@@ -1,6 +1,5 @@
 "use client";
 
-import useScreenWidth from "../_hooks/useScreenWidth";
 import AppLogo from "./AppLogo";
 import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
@@ -8,8 +7,6 @@ import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
 import { useState } from "react";
 
 const Header = (): React.JSX.Element => {
-  const { screenWidth } = useScreenWidth();
-  const isSmallScreen: boolean = screenWidth < 680;
   const [isOpenBurger, setIsOpenBurger] = useState(false);
   const ref = useAddStyleHeaderWithScroll("border-b-2 border-gray-100");
 
@@ -19,18 +16,21 @@ const Header = (): React.JSX.Element => {
       className="bg-white sticky top-0 w-full py-3 transition-all duration-100 ease-in-out"
     >
       <div className="flex items-center justify-between pl-2">
-        <AppLogo height="60" width={screenWidth < 415 ? "230" : "330"}>
-          Component market
-        </AppLogo>
+        <div>
+          <AppLogo height="60" width="280">
+            Component market
+          </AppLogo>
+        </div>
 
-        {isSmallScreen ? (
+        <div className="block md:hidden mt-1 mr-10 ">
           <BurgerMenu
             isOpenBurger={isOpenBurger}
             onIsOpenBurger={setIsOpenBurger}
           />
-        ) : (
+        </div>
+        <div className="hidden md:block">
           <Navigation />
-        )}
+        </div>
       </div>
     </header>
   );
