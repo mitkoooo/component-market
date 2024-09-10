@@ -5,9 +5,12 @@ import AppLogo from "./AppLogo";
 import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
+import { useState } from "react";
 
 const Header = (): React.JSX.Element => {
   const { screenWidth } = useScreenWidth();
+  const isSmallScreen: boolean = screenWidth < 680;
+  const [isOpenBurger, setIsOpenBurger] = useState(false);
   const ref = useAddStyleHeaderWithScroll("border-b-2 border-gray-100");
 
   return (
@@ -20,7 +23,14 @@ const Header = (): React.JSX.Element => {
           Component market
         </AppLogo>
 
-        {screenWidth > 680 ? <Navigation /> : <BurgerMenu />}
+        {isSmallScreen ? (
+          <BurgerMenu
+            isOpenBurger={isOpenBurger}
+            onIsOpenBurger={setIsOpenBurger}
+          />
+        ) : (
+          <Navigation />
+        )}
       </div>
     </header>
   );
