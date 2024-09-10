@@ -2,25 +2,24 @@ import { useEffect, useRef } from "react";
 
 export default function useAddStyleHeaderWithScroll(
   className: string
-): React.Ref<HTMLElement | undefined> {
-  const ref = useRef<HTMLElement | undefined>(undefined);
+): React.RefObject<HTMLDivElement> {
+  const ref = useRef<HTMLDivElement>(null);
 
   const styles: string[] = className.split(" ");
 
   useEffect(() => {
     function handleScroll() {
-      if (ref.current === undefined) return;
+      if (ref.current === null) return;
 
-      const header =
-        ref.current.parentElement?.parentElement?.parentElement?.querySelector(
-          "header"
-        );
+      const header = ref.current;
 
-      if (header === null || header === undefined) return;
+      const pageParent = header?.parentElement?.querySelector("main");
+
+      if (pageParent === null || pageParent === undefined) return;
 
       const limit = header?.getBoundingClientRect().bottom / 2;
 
-      if (ref.current?.getBoundingClientRect().top <= limit) {
+      if (pageParent?.getBoundingClientRect().top <= limit) {
         styles.forEach((style) => header.classList.add(style));
       } else {
         styles.forEach((style) => {
@@ -29,10 +28,14 @@ export default function useAddStyleHeaderWithScroll(
       }
     }
 
-    ref.current?.addEventListener("wheel", handleScroll);
+    ref.current?.parentElement
+      ?.querySelector("main")
+      ?.addEventListener("wheel", handleScroll);
 
     return () => {
-      window.removeEventListener("wheel", handleScroll);
+      ref.current?.parentElement
+        ?.querySelector("main")
+        ?.removeEventListener("wheel", handleScroll);
     };
   }, []);
 
