@@ -1,25 +1,25 @@
 import { Leaf } from "lucide-react";
 import Link from "next/link";
+import ImageShowCase from "./_components/ImageShowCase";
 
 export default function Page() {
   return (
     <div className="h-screen font-sans">
       <div className="mx-auto pt-10 sm:pt-26 md:pt-44 max-w-4xl  text-center w-full">
-        <h1 className="text-4xl sm:text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600 pb-1 mb-6">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-teal-600 pb-1 mb-6">
           Home-grown components
         </h1>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+        <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8">
           ready for consumption
         </h2>
         <div className="flex justify-center items-center space-x-2 text-green-700 font-mono">
           <Leaf className="w-6 h-6" />
-          <p className="text-lg sm:text-xl font-semibold text-nowrap">
+          <p className="text-base sm:text-xl font-semibold text-nowrap">
             Fresh from our digital fields
           </p>
           <Leaf className="w-6 h-6" />
         </div>
       </div>
-
       <div className="flex justify-center  text-[#005b90] mx-auto my-20">
         <Link
           href="/about"
@@ -28,6 +28,7 @@ export default function Page() {
           <span>Learn more</span>
         </Link>
       </div>
+      <ImageShowCase />
     </div>
   );
 }

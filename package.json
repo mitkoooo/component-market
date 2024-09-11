@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "body-scroll-lock": "^4.0.0-beta.0",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.5.4",
     "lucide-react": "^0.439.0",

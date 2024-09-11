@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative font-mono flex flex-col min-h-screen antialiased min-w-80">
+      <body className="relative font-mono flex flex-col min-h-screen antialiased min-w-80 mt-[84px]">
         <Header />
 
         <div>
