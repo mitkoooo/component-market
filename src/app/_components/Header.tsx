@@ -18,37 +18,35 @@ const Header = (): React.JSX.Element => {
   else bodyScrollLock.enableBodyScroll(burgerOpen);
 
   return (
-    <>
-      <header
-        ref={ref}
-        className="bg-white fixed top-0 w-full py-3 transition-all duration-100 ease-in-out"
-      >
-        <div className="flex items-center justify-between pl-2">
-          <div>
-            <AppLogo height="60" width="280">
-              Component market
-            </AppLogo>
-          </div>
-
-          <div className="block md:hidden mt-1 mr-10 ">
-            <BurgerMenu
-              isOpenBurger={isOpenBurger}
-              onIsOpenBurger={setIsOpenBurger}
-            />
-          </div>
-          <div className="hidden md:block">
-            <Navigation isBurgerMenu={false} />
-          </div>
+    <header
+      ref={ref}
+      className="bg-white fixed top-0 w-full pt-3 transition-all duration-100 ease-in-out"
+    >
+      <div className="flex items-center justify-between pl-2">
+        <div>
+          <AppLogo height="60" width="280">
+            Component market
+          </AppLogo>
         </div>
-        <div id="burgerOpen">
-          <BurgerOpen
-            className={`${
-              isOpenBurger ? "" : "hidden"
-            } md:hidden h-screen mt-3 border-t-2 border-gray-100 transition-all duration-100 ease-in-out`}
+
+        <div className="block md:hidden mt-1 mr-10 ">
+          <BurgerMenu
+            isOpenBurger={isOpenBurger}
+            onIsOpenBurger={setIsOpenBurger}
           />
         </div>
-      </header>
-    </>
+        <div className="hidden md:block">
+          <Navigation isBurgerMenu={false} />
+        </div>
+      </div>
+      <div id="burgerOpen">
+        <BurgerOpen
+          className={`${
+            isOpenBurger ? "h-screen" : "h-0 opacity-0"
+          } z-20 md:hidden border-t-2 border-gray-100 transition-all duration-300 ease-in-out`}
+        />
+      </div>
+    </header>
   );
 };
 
