@@ -4,7 +4,7 @@ import AppLogo from "./AppLogo";
 import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BurgerOpen from "./BurgerOpen";
 const bodyScrollLock = require("body-scroll-lock");
 
@@ -12,10 +12,12 @@ const Header = (): React.JSX.Element => {
   const [isOpenBurger, setIsOpenBurger] = useState(false);
   const ref = useAddStyleHeaderWithScroll("border-b-2 border-gray-100");
 
-  const burgerOpen = document.body.querySelector("#burgerOpen");
+  useEffect(() => {
+    const burgerOpen = document.body.querySelector("#burgerOpen");
 
-  if (isOpenBurger) bodyScrollLock.disableBodyScroll(burgerOpen);
-  else bodyScrollLock.enableBodyScroll(burgerOpen);
+    if (isOpenBurger) bodyScrollLock.disableBodyScroll(burgerOpen);
+    else bodyScrollLock.enableBodyScroll(burgerOpen);
+  }, [isOpenBurger]);
 
   return (
     <header
