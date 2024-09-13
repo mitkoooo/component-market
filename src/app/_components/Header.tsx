@@ -22,7 +22,7 @@ const Header = (): React.JSX.Element => {
   return (
     <header
       ref={ref}
-      className="bg-white fixed top-0 w-full pt-3 transition-all duration-100 ease-in-out"
+      className="z-50 bg-white fixed top-0 w-full py-3 transition-all duration-100 ease-in-out"
     >
       <div className="flex items-center justify-between pl-2">
         <div>

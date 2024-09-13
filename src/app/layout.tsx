@@ -18,10 +18,9 @@ export default function RootLayout({
       <body className="relative font-mono flex flex-col min-h-screen antialiased min-w-80 mt-[84px]">
         <Header />
 
-        <div>
-          <main className="min-h-screen h-full">{children}</main>
+        <div className="min-h-screen h-full">
+          <main>{children}</main>
         </div>
-
         <Footer />
       </body>
     </html>
