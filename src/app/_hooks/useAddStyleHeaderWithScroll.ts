@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 
 export default function useAddStyleHeaderWithScroll(
-  className: string
+  className: string,
+  options?: {
+    threshold?: number;
+  }
 ): React.RefObject<HTMLDivElement> {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -10,14 +13,17 @@ export default function useAddStyleHeaderWithScroll(
   useEffect(() => {
     function handleScroll() {
       if (ref.current === null) return;
-
       const header = ref.current;
 
       const pageParent = header?.parentElement?.querySelector("main");
 
       if (pageParent === null || pageParent === undefined) return;
 
-      const limit = header?.getBoundingClientRect().bottom / 2;
+      // Standard threshold is 0.1 (10% of the intersection)
+
+      const limit = options?.threshold
+        ? header?.getBoundingClientRect().bottom * (1 - options.threshold)
+        : header?.getBoundingClientRect().bottom * 0.9;
 
       if (pageParent?.getBoundingClientRect().top <= limit) {
         styles.forEach((style) => header.classList.add(style));

@@ -4,7 +4,7 @@ export default function Page(): React.JSX.Element {
       <h1 className="font-semibold my-3">About the author</h1>
       <p className="mb-3">
         My name is Vadim Mitko, I am a student in University of York currently
-        pursuing a Bachelor&apos;s degree of Engineering in Computer Science.
+        pursuing a Bachelor&apos;s degree in Computer Science.
       </p>
       <p className="mb-3">
         In autumn of 2023, I found a new born passion for web development and
