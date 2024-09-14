@@ -6,10 +6,12 @@ import Navigation from "./Navigation";
 import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
 import { useEffect, useState } from "react";
 import BurgerOpen from "./BurgerOpen";
+import { usePathname } from "next/navigation";
 const bodyScrollLock = require("body-scroll-lock");
 
 const Header = (): React.JSX.Element => {
   const [isOpenBurger, setIsOpenBurger] = useState(false);
+  const pathname = usePathname();
   const ref = useAddStyleHeaderWithScroll("border-b-2 border-gray-100");
 
   useEffect(() => {
@@ -18,6 +20,10 @@ const Header = (): React.JSX.Element => {
     if (isOpenBurger) bodyScrollLock.disableBodyScroll(burgerOpen);
     else bodyScrollLock.enableBodyScroll(burgerOpen);
   }, [isOpenBurger]);
+
+  useEffect(() => {
+    setIsOpenBurger(false);
+  }, [pathname]);
 
   return (
     <header

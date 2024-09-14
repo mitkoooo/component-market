@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import useRevealOnScroll from "../_hooks/useRevealOnScroll";
 
 type RevealOnScrollProps = {

@@ -3,7 +3,7 @@ import ImageShowCase from "./ImageShowCase";
 import RevealOnScroll from "./RevealOnScroll";
 
 const LandingDescription = (): React.JSX.Element => (
-  <div className="mt-72 w-full max-w-4xl mx-auto text-center py-12 px-4 sm:px-6 lg:px-8">
+  <div className="mt-32 w-full max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
     <div className="relative inline-block mx-8 sm:mx-12 my-8">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary mb-4">
         Harvest Your UI: A Crop of Fresh Components
@@ -32,7 +32,7 @@ const LandingDescription = (): React.JSX.Element => (
     <p className="text-lg sm:text-xl text-muted-foreground mt-4 mb-8">
       Cultivate your design with our handpicked selection of UI components
     </p>
-    <div className="mx-auto w-80 md:w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 ">
+    <div className="my-36 mx-auto w-80 md:w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 ">
       <RevealOnScroll>
         <div className="max-w-96 py-10 inline-flex items-center justify-center text-primary-foreground bg-primary rounded-lg px-6 shadow-lg mb-20 md:mb-0">
           <ImageShowCase />
