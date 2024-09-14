@@ -75,15 +75,15 @@ export default function ImageShowCase() {
   console.log(randomImages);
 
   return (
-    <div className="flex flex-col gap-8 ">
-      <div className="relative flex border-2 mx-auto w-72 h-48">
+    <div className="flex flex-col gap-8">
+      <div className="relative flex border-2 mx-auto w-full h-48">
         {randomImages.map((img, i) => (
           <Image
             className={`${activeImageIndex === i ? "" : "hidden"}`}
             key={i}
             alt={img.alt}
             src={img.src}
-            fill={true}
+            fill
           />
         ))}
       </div>
