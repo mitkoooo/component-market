@@ -83,6 +83,7 @@ export default function ImageShowCase() {
             key={i}
             alt={img.alt}
             src={img.src}
+            quality={20}
             fill
           />
         ))}

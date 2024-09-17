@@ -15,12 +15,12 @@ const Page = (): React.JSX.Element => {
             height="30"
           />
           <input
-            className="transition-all border-2 border-gray-300 rounded-lg w-full p-1 pl-10 focus:font-semibold outline-none text-black "
+            className="transition-all border-2 border-gray-300 rounded-lg w-full p-1 pl-10 focus:font-semibold outline-none text-black duration-150 "
             placeholder="Search for components..."
           ></input>
         </div>
       </div>
-      <div className="">
+      <div className="m-12  bg-gradient-to-br justify-center items-center from-white bg-gray-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
         <ComponentCard />
         <ComponentCard />
         <ComponentCard />
