@@ -1,7 +1,13 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import ComponentCard from "../_components/ComponentCard";
+import { getComponents } from "../_lib/data-service";
+import EmptyPage from "../_components/EmptyPage";
 
-const Page = (): React.JSX.Element => {
+const Page = async (): Promise<React.JSX.Element> => {
+  const components = await getComponents();
+
+  const hasItems = components?.length !== 0;
+
   return (
     <div className="font-sans">
       <div className="mx-2 flex gap-2 my-4 sm:mx-12 md:mx-32 lg:mx-48">
@@ -20,14 +26,16 @@ const Page = (): React.JSX.Element => {
           ></input>
         </div>
       </div>
-      <div className="m-12  bg-gradient-to-br justify-center items-center from-white bg-gray-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-      </div>
+
+      {!hasItems && <EmptyPage />}
+
+      {hasItems && (
+        <div className="m-12 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
+          {components?.map((component) => (
+            <ComponentCard component={component} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
