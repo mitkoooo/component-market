@@ -5,9 +5,8 @@ import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
 import { useEffect, useState } from "react";
-import BurgerOpen from "./BurgerOpen";
 import { usePathname } from "next/navigation";
-const bodyScrollLock = require("body-scroll-lock");
+import { enableBodyScroll, disableBodyScroll } from "body-scroll-lock";
 
 const Header = (): React.JSX.Element => {
   const [isOpenBurger, setIsOpenBurger] = useState(false);
@@ -17,8 +16,10 @@ const Header = (): React.JSX.Element => {
   useEffect(() => {
     const burgerOpen = document.body.querySelector("#burgerOpen");
 
-    if (isOpenBurger) bodyScrollLock.disableBodyScroll(burgerOpen);
-    else bodyScrollLock.enableBodyScroll(burgerOpen);
+    if (!burgerOpen) return;
+
+    if (isOpenBurger) disableBodyScroll(burgerOpen);
+    else enableBodyScroll(burgerOpen);
   }, [isOpenBurger]);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const Header = (): React.JSX.Element => {
   return (
     <header
       ref={ref}
-      className="z-50 bg-white fixed top-0 w-full  transition-all duration-100 ease-in-out"
+      className="z-40 bg-white fixed top-0 w-full  transition-all duration-100 ease-in-out"
     >
       <div className="flex items-center justify-between pl-2 py-3">
         <div>
@@ -47,12 +48,15 @@ const Header = (): React.JSX.Element => {
           <Navigation isBurgerMenu={false} />
         </div>
       </div>
-      <div id="burgerOpen">
-        <BurgerOpen
-          className={`${
-            isOpenBurger ? "h-screen" : "h-0 opacity-0"
-          } z-20 md:hidden border-t-2 border-gray-100 transition-all duration-300 ease-in-out`}
-        />
+      <div
+        className={`${
+          isOpenBurger
+            ? "h-screen opacity-100"
+            : "h-0 -translate-y-96 opacity-0"
+        } z-20 md:hidden border-t-2 border-gray-100 transition-opacity duration-300 ease-in-out`}
+        id="burgerOpen"
+      >
+        <Navigation isBurgerMenu={true} />
       </div>
     </header>
   );

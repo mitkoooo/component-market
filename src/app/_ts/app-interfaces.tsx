@@ -11,4 +11,5 @@ export interface Component {
   image: string;
   code_tsx: string;
   code_jsx: string;
+  category: string;
 }

@@ -7,7 +7,7 @@ type NavigationProps = {
 
 const Navigation = ({ isBurgerMenu }: NavigationProps): React.JSX.Element => {
   const NavClass = isBurgerMenu
-    ? "flex flex-col relative items-center mx-auto mt-20 h-full gap-20"
+    ? "flex flex-col relative items-center mx-auto mt-20 gap-20"
     : "flex relative mx-16 gap-20";
 
   const LinkClass = isBurgerMenu
