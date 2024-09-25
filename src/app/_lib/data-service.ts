@@ -24,7 +24,10 @@ export const getComponentCategories = async (): Promise<string[] | null> => {
     data,
     error,
   }: { data: ComponentCategoryQuery[] | null; error: PostgrestError | null } =
-    await supabase.from("component_categories").select("*");
+    await supabase
+      .from("component_categories")
+      .select("category_name")
+      .order("category_name");
 
   if (error) throw new Error(error.message);
 

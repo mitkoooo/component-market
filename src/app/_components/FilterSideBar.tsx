@@ -27,32 +27,49 @@ const FilterSideBar = ({
     setShowFilterSideBar(false);
   };
 
-  const handleFilter = (filter: string): void => {
+  const handleFilter = (): void => {
     const params = new URLSearchParams(searchParams);
-    params.set("category", filter);
+
+    params.set("category", activeFilters.join(" "));
+
     router.replace(
       `${pathname}?${params.toString()}
-    `,
+  `,
       { scroll: false }
     );
+
+    setShowFilterSideBar(false);
   };
 
   const handleFilterClick = (category: string) => {
     setActiveFilters((prevState) => [...prevState, category]);
-    console.log("hi");
   };
 
   const handleFilterRemove = (category: string) => {
     setActiveFilters((prevState) => [
       ...prevState.filter((activeCategory) => activeCategory !== category),
     ]);
-    console.log("I work");
   };
 
-  const categoryToFilter = (category: string): string => {
-    return category.includes(" ")
-      ? category.replaceAll(" ", "-").toLowerCase()
-      : category.toLowerCase();
+  const categoryToText = (category: string): string => {
+    const isMultipleWord = category.includes("-");
+
+    if (!isMultipleWord)
+      return category.charAt(0).toUpperCase() + category.slice(1);
+
+    const wordArr: string[] = category.split("-");
+    let finalString = "";
+
+    for (let i = 0; i < wordArr.length; i++) {
+      const curWord = wordArr.at(i);
+
+      finalString =
+        finalString +
+        curWord?.charAt(0)?.toUpperCase() +
+        curWord?.slice(1) +
+        " ";
+    }
+    return finalString;
   };
 
   useEffect(() => {
@@ -72,10 +89,7 @@ const FilterSideBar = ({
           <h1 className="text-lg font-bold ml-4">Filter by type</h1>
           <ul className="ml-8 mt-8">
             {componentCategories?.map((category) => {
-              const isActive = activeFilters.includes(
-                categoryToFilter(category)
-              );
-              const categoryFilter = categoryToFilter(category);
+              const isActive = activeFilters.includes(category);
 
               return (
                 <li className="flex w-44 relative my-6" key={category}>
@@ -84,15 +98,15 @@ const FilterSideBar = ({
                       isActive ? "font-medium" : ""
                     }`}
                     onClick={() => {
-                      isActive ? () => {} : handleFilterClick(categoryFilter);
+                      isActive ? () => {} : handleFilterClick(category);
                     }}
                   >
-                    {category}
+                    {categoryToText(category)}
                   </button>
                   {isActive && (
                     <button
                       className="absolute right-8"
-                      onClick={() => handleFilterRemove(categoryFilter)}
+                      onClick={() => handleFilterRemove(category)}
                     >
                       <Plus transform="rotate(45)" height={20} width={20} />
                     </button>
@@ -108,9 +122,12 @@ const FilterSideBar = ({
         </button>
       </div>
       {activeFilters.length !== 0 && (
-        <div className="absolute bottom-28 left-0 right-0 bg-blue-400 rounded-full w-48 p-2 text-sm text-white font-semibold mx-auto">
+        <button
+          onClick={handleFilter}
+          className="absolute bottom-28 left-0 right-0 bg-blue-400 rounded-full w-48 p-2 text-sm text-white font-semibold mx-auto"
+        >
           Apply Selected Filters ({activeFilters.length})
-        </div>
+        </button>
       )}
     </div>
   );
