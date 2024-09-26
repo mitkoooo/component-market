@@ -12,7 +12,9 @@ export const getComponents = async (): Promise<Component[] | null> => {
     error,
   }: { data: Component[] | null; error: PostgrestError | null } = await supabase
     .from("components")
-    .select("id, created_at, name, description, image, code_tsx, code_jsx");
+    .select(
+      "id, created_at, name, description, image, code_tsx, code_jsx, category_name"
+    );
 
   if (error) throw new Error(error.message);
 

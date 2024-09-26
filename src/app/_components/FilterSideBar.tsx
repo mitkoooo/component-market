@@ -19,8 +19,10 @@ const FilterSideBar = ({
 }: FilterSideBarProps): React.JSX.Element => {
   const { setShowFilterSideBar, showFilterSideBar } = showFilterSideBarState;
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const router = useRouter();
   const pathname = usePathname();
+  const [pendingFilters, setPendingFilters] = useState<string[]>([]);
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
 
   const handleClick = () => {
@@ -28,27 +30,48 @@ const FilterSideBar = ({
   };
 
   const handleFilter = (): void => {
-    const params = new URLSearchParams(searchParams);
+    if (componentCategories?.length === pendingFilters?.length)
+      router.replace(
+        `${pathname}
+    `,
+        { scroll: false }
+      );
+    else {
+      params.set("category", pendingFilters.join(" "));
 
-    params.set("category", activeFilters.join(" "));
+      router.replace(
+        `${pathname}?${params.toString()}
+  `,
+        { scroll: false }
+      );
+
+      setActiveFilters((prevState) => [...prevState, ...pendingFilters]);
+    }
+    setShowFilterSideBar(false);
+    setPendingFilters([]);
+  };
+
+  const handleFilterClick = (category: string) => {
+    setPendingFilters((prevState) => [...prevState, category]);
+  };
+
+  const handlePendingFilterRemove = (category: string) => {
+    setPendingFilters((prevState) => [
+      ...prevState.filter((pendingCategory) => pendingCategory !== category),
+    ]);
+  };
+
+  const handleActiveFilterRemove = () => {
+    for (const filter of activeFilters) params.delete("category", filter);
 
     router.replace(
-      `${pathname}?${params.toString()}
+      `${pathname}
   `,
       { scroll: false }
     );
 
     setShowFilterSideBar(false);
-  };
-
-  const handleFilterClick = (category: string) => {
-    setActiveFilters((prevState) => [...prevState, category]);
-  };
-
-  const handleFilterRemove = (category: string) => {
-    setActiveFilters((prevState) => [
-      ...prevState.filter((activeCategory) => activeCategory !== category),
-    ]);
+    setActiveFilters([]);
   };
 
   const categoryToText = (category: string): string => {
@@ -89,24 +112,24 @@ const FilterSideBar = ({
           <h1 className="text-lg font-bold ml-4">Filter by type</h1>
           <ul className="ml-8 mt-8">
             {componentCategories?.map((category) => {
-              const isActive = activeFilters.includes(category);
+              const isPending = pendingFilters.includes(category);
 
               return (
                 <li className="flex w-44 relative my-6" key={category}>
                   <button
                     className={`hover:font-medium ${
-                      isActive ? "font-medium" : ""
+                      isPending ? "font-medium" : ""
                     }`}
                     onClick={() => {
-                      isActive ? () => {} : handleFilterClick(category);
+                      isPending ? () => {} : handleFilterClick(category);
                     }}
                   >
                     {categoryToText(category)}
                   </button>
-                  {isActive && (
+                  {isPending && (
                     <button
                       className="absolute right-8"
-                      onClick={() => handleFilterRemove(category)}
+                      onClick={() => handlePendingFilterRemove(category)}
                     >
                       <Plus transform="rotate(45)" height={20} width={20} />
                     </button>
@@ -121,14 +144,25 @@ const FilterSideBar = ({
           <Plus transform="rotate(45)" height={30} width={30} />
         </button>
       </div>
-      {activeFilters.length !== 0 && (
-        <button
-          onClick={handleFilter}
-          className="absolute bottom-28 left-0 right-0 bg-blue-400 rounded-full w-48 p-2 text-sm text-white font-semibold mx-auto"
-        >
-          Apply Selected Filters ({activeFilters.length})
-        </button>
-      )}
+      <div className="flex flex-col gap-6 absolute bottom-28 left-0 right-0">
+        {pendingFilters.length !== 0 ? (
+          <button
+            onClick={handleFilter}
+            className=" bg-blue-400 rounded-full w-48 p-2 text-sm text-white font-semibold mx-auto"
+          >
+            Apply Selected Filters ({pendingFilters.length})
+          </button>
+        ) : (
+          activeFilters.length !== 0 && (
+            <button
+              onClick={handleActiveFilterRemove}
+              className="  w-48 p-2 text-sm text-gray-500 font-semibold mx-auto"
+            >
+              Remove filters
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 };
