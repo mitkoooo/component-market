@@ -17,15 +17,10 @@ const ComponentsDisplay = ({
   const filters = params?.toString()?.slice(9)?.split("+");
 
   if (!(params?.toString() === "")) {
-    console.log(filters);
-    console.log(components);
-
     components = components?.filter((component) =>
       filters.includes(component?.category_name)
     );
   }
-
-  console.log(components);
 
   if (components?.length == 0) return <EmptyPage />;
 

@@ -35,7 +35,7 @@ const ComponentSearch = ({
     <>
       <FilterSideBar
         showFilterSideBarState={{ setShowFilterSideBar, showFilterSideBar }}
-        componentCategories={componentCategories}
+        componentCategories={componentCategories ?? []}
       />
 
       <div>
