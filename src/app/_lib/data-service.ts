@@ -6,15 +6,21 @@ type ComponentCategoryQuery = {
   category_name: string;
 };
 
-export const getComponents = async (): Promise<Component[] | null> => {
+type getComponentsProps = {
+  hasString?: string;
+};
+
+export const getComponents = async (
+  options: getComponentsProps = {}
+): Promise<Component[] | null> => {
+  let query = supabase.from("components").select();
+
+  if (options?.hasString) query = query.ilike("name", `%${options.hasString}%`);
+
   const {
     data,
     error,
-  }: { data: Component[] | null; error: PostgrestError | null } = await supabase
-    .from("components")
-    .select(
-      "id, created_at, name, description, image, code_tsx, code_jsx, category_name"
-    );
+  }: { data: Component[] | null; error: PostgrestError | null } = await query;
 
   if (error) throw new Error(error.message);
 

@@ -3,28 +3,38 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import FilterSideBar from "./FilterSideBar";
-import { Component } from "../_ts/app-interfaces";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useComponents } from "../_context/ComponentsContext";
 
 type ComponentSearchProps = {
   componentCategories: string[] | null;
-  components: Component[] | null | undefined;
 };
 
-interface IFormInput {
+type Inputs = {
   searchInput: string;
-}
+};
 
 const ComponentSearch = ({
-  components,
   componentCategories,
 }: ComponentSearchProps): React.JSX.Element => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false);
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = ({ searchInput }) => {
-    components = components?.filter((component) =>
-      component?.name.includes(searchInput)
+  const { register, handleSubmit, reset } = useForm<Inputs>();
+  const { components, displayedComponents, setDisplayedComponents } =
+    useComponents();
+
+  const [displayNumResults, setDisplayNumResults] = useState(false);
+
+  const onSubmit: SubmitHandler<Inputs> = ({ searchInput }) => {
+    const newComponents = components?.filter((component) =>
+      component.name.toLowerCase().includes(searchInput.toLowerCase())
     );
+
+    setDisplayedComponents(
+      newComponents !== undefined ? newComponents : components
+    );
+
+    if (searchInput === "") setDisplayNumResults(false);
+    else setDisplayNumResults(true);
   };
 
   const handleClick = () => {
@@ -69,6 +79,11 @@ const ComponentSearch = ({
             </form>
           </div>
         </div>
+        {displayNumResults && (
+          <h1 className="text-center text-sm font-light mt-3">
+            Found {displayedComponents?.length} results
+          </h1>
+        )}
       </div>
     </>
   );

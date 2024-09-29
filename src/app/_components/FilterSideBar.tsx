@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 type FilterSideBarProps = {
   componentCategories: string[];
@@ -53,6 +54,7 @@ const FilterSideBar = ({
 
   const onSubmit: SubmitHandler<typeof categories> = (data) => {
     const activeFilters = [];
+    let toastMessage = "";
 
     for (const filter of Object.keys(data)) {
       if (data[filter]) activeFilters.push(filter);
@@ -61,13 +63,14 @@ const FilterSideBar = ({
     if (
       componentCategories?.length === activeFilters?.length ||
       activeFilters.length === 0
-    )
+    ) {
       router.replace(
         `${pathname}
     `,
         { scroll: false }
       );
-    else {
+      toastMessage = "Filters successfully removed";
+    } else {
       params.set("category", activeFilters.join(" "));
 
       router.replace(
@@ -75,9 +78,13 @@ const FilterSideBar = ({
   `,
         { scroll: false }
       );
+      toastMessage = "Filters successfully applied";
     }
     setShowFilterSideBar(false);
     setPendingFilters([]);
+    toast.success(toastMessage, {
+      duration: 2000,
+    });
     reset();
   };
 
@@ -166,7 +173,7 @@ const FilterSideBar = ({
             </ul>
           </div>
         </div>
-        <div className="flex flex-col gap-10 absolute bottom-40 left-0 right-0">
+        <div className="mt-8 flex flex-col gap-10 left-0 right-0">
           {pendingFilters.length !== 0 ? (
             <button
               type="submit"
