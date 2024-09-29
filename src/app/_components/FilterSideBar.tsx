@@ -101,6 +101,20 @@ const FilterSideBar = ({
     if (!showFilterSideBar) enableBodyScroll(document.body);
   }, [showFilterSideBar]);
 
+  useEffect(() => {
+    const handleClick = (e: Event) => {
+      const targetEl = e.target as Element;
+
+      const filterSideBar = document.body.querySelector("#filter-side-bar");
+
+      if (!filterSideBar?.contains(targetEl)) setShowFilterSideBar(false);
+    };
+
+    if (showFilterSideBar) document.body.addEventListener("click", handleClick);
+
+    return () => document.body.removeEventListener("click", handleClick);
+  }, [showFilterSideBar, setShowFilterSideBar]);
+
   return (
     <div
       id="filter-side-bar"
@@ -152,7 +166,7 @@ const FilterSideBar = ({
             </ul>
           </div>
         </div>
-        <div className="flex flex-col gap-10 absolute bottom-28 left-0 right-0">
+        <div className="flex flex-col gap-10 absolute bottom-40 left-0 right-0">
           {pendingFilters.length !== 0 ? (
             <button
               type="submit"
