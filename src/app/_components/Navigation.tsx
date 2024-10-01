@@ -11,8 +11,8 @@ const Navigation = ({ isBurgerMenu }: NavigationProps): React.JSX.Element => {
     : "flex relative mx-16 gap-20";
 
   const LinkClass = isBurgerMenu
-    ? "text-xl font-normal hover:font-semibold transition ease-in-out delay-15 hover:-translate-y-1 hover:scale-105 duration-300"
-    : "font-normal hover:font-semibold transition ease-in-out delay-15 hover:-translate-y-1 hover:scale-105 duration-300 py-1 px-1";
+    ? "text-xl font-normal hover:font-semibold transition ease-in-out delay-15  duration-300"
+    : "font-normal hover:font-semibold transition ease-in-out delay-15  duration-300 py-1 px-1";
 
   return (
     <nav className={NavClass}>
