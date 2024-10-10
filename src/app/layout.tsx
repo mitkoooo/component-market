@@ -23,9 +23,7 @@ export default function RootLayout({
           <Toaster />
         </div>
 
-        <div className="min-h-screen h-full">
-          <main>{children}</main>
-        </div>
+        <main className="min-h-screen h-full">{children}</main>
         <Footer />
       </body>
     </html>

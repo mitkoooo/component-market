@@ -15,9 +15,9 @@ export default function useAddStyleHeaderWithScroll(
       if (ref.current === null) return;
       const header = ref.current;
 
-      const pageParent = header?.parentElement?.querySelector("main");
+      const mainEl = header?.parentElement?.querySelector("main");
 
-      if (pageParent === null || pageParent === undefined) return;
+      if (mainEl === null || mainEl === undefined) return;
 
       // Standard threshold is 0.1 (10% of the intersection)
 
@@ -25,7 +25,7 @@ export default function useAddStyleHeaderWithScroll(
         ? header?.getBoundingClientRect().bottom * (1 - options.threshold)
         : header?.getBoundingClientRect().bottom * 0.9;
 
-      if (pageParent?.getBoundingClientRect().top <= limit) {
+      if (mainEl?.getBoundingClientRect().top < limit) {
         styles.forEach((style) => header.classList.add(style));
       } else {
         styles.forEach((style) => {
@@ -34,16 +34,12 @@ export default function useAddStyleHeaderWithScroll(
       }
     }
 
-    ref.current?.parentElement
-      ?.querySelector("main")
-      ?.addEventListener("wheel", handleScroll);
+    document.addEventListener("scroll", handleScroll);
 
     return () => {
-      ref.current?.parentElement
-        ?.querySelector("main")
-        ?.removeEventListener("wheel", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [options?.threshold, styles]);
 
   return ref;
 }
