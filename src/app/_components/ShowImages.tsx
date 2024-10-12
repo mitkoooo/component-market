@@ -5,11 +5,11 @@ import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Component } from "../_ts/app-interfaces";
 
-type ImageShowCaseProps = {
+type ShowImagesProps = {
   components: Component[];
 };
 
-export default function ImageShowCase({ components }: ImageShowCaseProps) {
+export default function ShowImages({ components }: ShowImagesProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const images = components.map((component) => component.image);
