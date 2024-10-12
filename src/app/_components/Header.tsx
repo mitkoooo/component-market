@@ -1,7 +1,6 @@
 "use client";
 
 import AppLogo from "./AppLogo";
-import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
 import { useEffect, useState } from "react";
@@ -40,10 +39,6 @@ const Header = (): React.JSX.Element => {
         </div>
 
         <div className="block md:hidden mr-10 ">
-          {/* <BurgerMenu
-            isOpenBurger={isOpenBurger}
-            onIsOpenBurger={setIsOpenBurger}
-          /> */}
           <Hamburger
             size={30}
             onToggle={() => {
