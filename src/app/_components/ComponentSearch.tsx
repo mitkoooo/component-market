@@ -18,7 +18,7 @@ const ComponentSearch = ({
   componentCategories,
 }: ComponentSearchProps): React.JSX.Element => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false);
-  const { register, handleSubmit, reset } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
   const { components, displayedComponents, setDisplayedComponents } =
     useComponents();
 
