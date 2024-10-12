@@ -1,6 +1,7 @@
 import Link from "next/link";
-import ImageShowcase from "@/app/_components/ImageShowcase";
+
 import RevealOnScroll from "@/app/_components/RevealOnScroll";
+import ImageShowcase from "@/app/_components/ImageShowcase";
 import { getComponents } from "../_lib/data-service";
 
 const LandingDescription = async (): Promise<React.JSX.Element> => {
