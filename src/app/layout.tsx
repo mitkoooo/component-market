@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 import { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "component-market",
@@ -22,8 +23,10 @@ export default function RootLayout({
         <div className="font-sans">
           <Toaster />
         </div>
+        <Suspense fallback={<></>}>
+          <main className="min-h-screen h-full">{children}</main>
+        </Suspense>
 
-        <main className="min-h-screen h-full">{children}</main>
         <Footer />
       </body>
     </html>
