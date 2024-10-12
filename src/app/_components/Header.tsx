@@ -7,6 +7,7 @@ import useAddStyleHeaderWithScroll from "../_hooks/useAddStyleHeaderWithScroll";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { enableBodyScroll, disableBodyScroll } from "body-scroll-lock";
+import { Squeeze as Hamburger } from "hamburger-react";
 
 const Header = (): React.JSX.Element => {
   const [isOpenBurger, setIsOpenBurger] = useState(false);
@@ -38,10 +39,17 @@ const Header = (): React.JSX.Element => {
           </AppLogo>
         </div>
 
-        <div className="block md:hidden mt-1 mr-10 ">
-          <BurgerMenu
+        <div className="block md:hidden mr-10 ">
+          {/* <BurgerMenu
             isOpenBurger={isOpenBurger}
             onIsOpenBurger={setIsOpenBurger}
+          /> */}
+          <Hamburger
+            size={30}
+            onToggle={() => {
+              setIsOpenBurger((state) => !state);
+            }}
+            toggled={isOpenBurger}
           />
         </div>
         <div className="hidden md:block">

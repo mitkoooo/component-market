@@ -163,8 +163,11 @@ const FilterSideBar = ({
                       className="sr-only"
                     />
                     {isPending && (
-                      <label htmlFor={category} className="absolute right-8">
-                        <Plus transform="rotate(45)" height={20} width={20} />
+                      <label
+                        htmlFor={category}
+                        className="absolute [transform:rotate(45deg)] right-8"
+                      >
+                        <Plus height={20} width={20} />
                       </label>
                     )}
                   </div>
@@ -195,7 +198,9 @@ const FilterSideBar = ({
       </form>
 
       <button className="absolute top-0 right-0 p-3" onClick={handleClick}>
-        <Plus transform="rotate(45)" height={30} width={30} />
+        <div className="[transform:rotate(45deg)]">
+          <Plus height={30} width={30} />
+        </div>
       </button>
     </div>
   );

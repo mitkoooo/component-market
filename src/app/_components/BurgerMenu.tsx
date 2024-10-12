@@ -34,7 +34,9 @@ const BurgerMenu = ({
           isOpenBurger ? "" : "[transform:rotateX(90deg)]"
         }`}
       >
-        <Plus height="30" width="30" transform="rotate(45)" />
+        <div className="[transform:rotate(45deg)]">
+          <Plus height="30" width="30" />
+        </div>
       </span>
       <div
         className={`${
@@ -44,7 +46,7 @@ const BurgerMenu = ({
         }`}
       >
         <span
-          className={` absolute top-0  right-2 left-0 bottom-0 transition-all ease-in-out  origin-right ${
+          className={` absolute top-0  right-2 left-0 bottom-0 transition-all ease-in-out origin-right ${
             isHovered && !isOpenBurger
               ? ""
               : `duration-500 [transform:rotateY(90deg)]`
