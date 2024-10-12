@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import RevealOnScroll from "@/app/_components/RevealOnScroll";
-import ImageShowcase from "@/app/_components/ImageShowcase";
+import ImageShowCase from "@/app/_components/ImageShowcase";
 import { getComponents } from "../_lib/data-service";
 
 const LandingDescription = async (): Promise<React.JSX.Element> => {
@@ -40,7 +40,7 @@ const LandingDescription = async (): Promise<React.JSX.Element> => {
       <div className="my-36 mx-auto w-80 md:w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 ">
         <RevealOnScroll>
           <div className="max-w-96 py-10 inline-flex items-center justify-center text-primary-foreground bg-primary rounded-lg px-6 shadow-lg mb-20 md:mb-0 w-full">
-            <ImageShowcase components={components ?? []} />
+            <ImageShowCase components={components ?? []} />
           </div>
         </RevealOnScroll>
 
