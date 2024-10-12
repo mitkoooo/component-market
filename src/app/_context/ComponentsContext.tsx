@@ -13,7 +13,7 @@ type ComponentsContextType = {
   setDisplayedComponents: Dispatch<SetStateAction<Component[] | null>>;
 };
 
-const ComponentsContext = createContext<ComponentsContextType>({});
+const ComponentsContext = createContext<ComponentsContextType | null>(null);
 
 type componentsProviderProps = {
   children: React.JSX.Element;
