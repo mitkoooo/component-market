@@ -24,7 +24,7 @@ const ComponentsDisplay = (): React.JSX.Element => {
 
   return (
     <>
-      <div className="m-12 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-24">
+      <div className="m-12 justify-center items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-24">
         {displayedComponents?.map((component) => (
           <ComponentCard key={component.id} component={component} />
         ))}

@@ -1,4 +1,4 @@
-import { PostgrestError } from "@supabase/supabase-js";
+import { PostgrestError, PostgrestSingleResponse } from "@supabase/supabase-js";
 import { Component } from "../_ts/app-interfaces";
 import { supabase } from "./supabase";
 
@@ -42,4 +42,18 @@ export const getComponentCategories = async (): Promise<string[] | null> => {
   const finalData = data?.map((obj) => obj?.category_name);
 
   return finalData ?? null;
+};
+
+export const getComponent = async (
+  componentId: number
+): Promise<Component | null> => {
+  const { data, error }: PostgrestSingleResponse<Component> = await supabase
+    .from("components")
+    .select()
+    .eq("id", componentId)
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };

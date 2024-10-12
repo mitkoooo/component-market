@@ -3,17 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Component } from "../_ts/app-interfaces";
 
-type ImageShowcaseProps = {
-  components: Component[];
-};
-
-export default function ImageShowcase({ components }: ImageShowcaseProps) {
+export default function ImageShowcase({ components }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const images = components.map((component) => component.image);
-
   const descriptions = components.map((component) => component.description);
 
   const handleLeftClick = () => {
@@ -31,30 +25,18 @@ export default function ImageShowcase({ components }: ImageShowcaseProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="relative flex border-2 mx-auto w-full h-48">
-        {images.map((img, i) => {
-          if (img === "null")
-            return (
-              <p
-                className={`${activeImageIndex === i ? "" : "hidden"}`}
-                key={i}
-              >
-                Image is unavailable at the moment...
-              </p>
-            );
-          else
-            return (
-              <Image
-                className={`${activeImageIndex === i ? "" : "hidden"}`}
-                key={i}
-                alt={img}
-                src={img}
-                quality={100}
-                fill
-              />
-            );
-        })}
+        {images.map((img, i) => (
+          <Image
+            className={`${activeImageIndex === i ? "" : "hidden"}`}
+            key={i}
+            alt={img}
+            src={img}
+            quality={100}
+            fill
+          />
+        ))}
       </div>
-      <p className="mx-auto w-72 h-14 text-sm text-center font-light text-wrap">
+      <p className="mx-auto w-72 text-sm text-center font-light text-wrap">
         {descriptions.at(activeImageIndex)}
       </p>
 
