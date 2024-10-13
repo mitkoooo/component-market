@@ -36,7 +36,7 @@ const FilterSideBar = ({
   showFilterSideBarState,
 }: FilterSideBarProps): React.JSX.Element => {
   const categories = Object.fromEntries(
-    componentCategories?.map((category) => [category, category])
+    componentCategories?.map((category) => [category, false])
   );
 
   const { setShowFilterSideBar, showFilterSideBar } = showFilterSideBarState;
@@ -52,13 +52,10 @@ const FilterSideBar = ({
 
   const hasParams = params.get("category") === null ? false : true;
 
-  const onSubmit: SubmitHandler<typeof categories> = (data) => {
-    const activeFilters = [];
+  const onSubmit: SubmitHandler<typeof categories> = () => {
+    const activeFilters = pendingFilters;
+    console.log(pendingFilters);
     let toastMessage = "";
-
-    for (const filter of Object.keys(data)) {
-      if (data[filter]) activeFilters.push(filter);
-    }
 
     if (
       componentCategories?.length === activeFilters?.length ||
@@ -140,20 +137,10 @@ const FilterSideBar = ({
 
                 return (
                   <div className="flex w-44 relative my-6" key={category}>
-                    <label
-                      htmlFor={category}
-                      className={`select-none hover:font-medium ${
-                        isPending ? "font-medium" : ""
-                      }`}
-                    >
-                      {categoryToText(category)}
-                    </label>
                     <input
                       {...register(category)}
                       type="checkbox"
                       id={category}
-                      name={category}
-                      value={category}
                       checked={isPending}
                       onChange={() =>
                         isPending
@@ -162,6 +149,14 @@ const FilterSideBar = ({
                       }
                       className="sr-only"
                     />
+                    <label
+                      htmlFor={category}
+                      className={`select-none hover:font-medium ${
+                        isPending ? "font-medium" : ""
+                      }`}
+                    >
+                      {categoryToText(category)}
+                    </label>
                     {isPending && (
                       <label
                         htmlFor={category}
