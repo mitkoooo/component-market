@@ -54,7 +54,6 @@ const FilterSideBar = ({
 
   const onSubmit: SubmitHandler<typeof categories> = () => {
     const activeFilters = pendingFilters;
-    console.log(pendingFilters);
     let toastMessage = "";
 
     if (
