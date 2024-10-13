@@ -40,6 +40,9 @@ const Header = (): React.JSX.Element => {
 
         <div className="block md:hidden mr-10 ">
           <Hamburger
+            duration={0.3}
+            label="Show menu"
+            rounded
             size={30}
             onToggle={() => {
               setIsOpenBurger((state) => !state);
