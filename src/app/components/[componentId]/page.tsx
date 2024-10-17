@@ -15,7 +15,7 @@ const Page = async ({
   if (!component) return <></>;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen font-roboto text-opacity-85">
       <div className="container mx-auto px-4 py-8 relative">
         <h1 className="text-4xl font-bold mb-12 text-center text-blue-900 relative z-10">
           {component.name}
