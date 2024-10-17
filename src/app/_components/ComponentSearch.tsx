@@ -6,17 +6,11 @@ import FilterSideBar from "./FilterSideBar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useComponents } from "../_context/ComponentsContext";
 
-type ComponentSearchProps = {
-  componentCategories: string[] | null;
-};
-
 type Inputs = {
   searchInput: string;
 };
 
-const ComponentSearch = ({
-  componentCategories,
-}: ComponentSearchProps): React.JSX.Element => {
+const ComponentSearch = (): React.JSX.Element => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
   const { components, displayedComponents, setDisplayedComponents } =
@@ -45,7 +39,6 @@ const ComponentSearch = ({
     <>
       <FilterSideBar
         showFilterSideBarState={{ setShowFilterSideBar, showFilterSideBar }}
-        componentCategories={componentCategories ?? []}
       />
 
       <div>
