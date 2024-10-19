@@ -15,7 +15,7 @@ const Navigation = ({ isBurgerMenu }: NavigationProps): React.JSX.Element => {
     : "font-normal hover:font-semibold transition ease-in-out delay-15  duration-300 py-1 px-1";
 
   return (
-    <nav className={NavClass}>
+    <nav className={`${NavClass} select-none`}>
       <Link href="/components" className={LinkClass}>
         Components
       </Link>

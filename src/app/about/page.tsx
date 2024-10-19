@@ -1,6 +1,6 @@
 export default function Page(): React.JSX.Element {
   return (
-    <div className="my-16 mx-12 sm:mx-24 md:mx-48">
+    <div className="bg-white my-16 mx-12 sm:mx-24 md:mx-48">
       <h1 className="font-semibold my-3">About the author</h1>
       <p className="mb-3">
         My name is Vadim Mitko, I am a student in University of York currently

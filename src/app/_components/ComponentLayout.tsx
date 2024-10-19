@@ -15,7 +15,7 @@ const ComponentLayout = ({
   return (
     <ComponentsProvider initialComponents={components}>
       <>
-        <div className="mx-2 my-4 sm:mx-12 md:mx-32 lg:mx-48">
+        <div className="mx-2 my-4 sm:mx-12">
           <ComponentSearch />
         </div>
         <ComponentsDisplay />

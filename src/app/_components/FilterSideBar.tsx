@@ -6,6 +6,14 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import {
+  ButtonSvg,
+  DataDisplaySvg,
+  FeedbackSvg,
+  LayoutItemSvg,
+  LayoutSvg,
+  NavigationSvg,
+} from "./svg/Categories";
 
 type FilterSideBarProps = {
   showFilterSideBarState: {
@@ -13,6 +21,30 @@ type FilterSideBarProps = {
     showFilterSideBar: boolean;
   };
 };
+
+type Inputs = {
+  buttons: boolean;
+  "data-display": boolean;
+  feedback: boolean;
+  "layout-item": boolean;
+  layouts: boolean;
+  navigation: boolean;
+};
+
+type ComponentName =
+  | "buttons"
+  | "data-display"
+  | "feedback"
+  | "layout-item"
+  | "layouts"
+  | "navigation";
+
+type ComponentCategories = Array<{
+  readonly componentName: ComponentName;
+  readonly componentSvg: JSX.Element;
+}>;
+
+type handlePendingFiltersFn = (category: string) => void;
 
 const categoryToText = (category: string): string => {
   const isMultipleWord = category.includes("-");
@@ -33,7 +65,7 @@ const categoryToText = (category: string): string => {
 const FilterSideBar = ({
   showFilterSideBarState,
 }: FilterSideBarProps): React.JSX.Element => {
-  const componentCategories = [
+  const componentCategories: ComponentCategories = [
     { componentName: "buttons", componentSvg: <ButtonSvg /> },
     { componentName: "data-display", componentSvg: <DataDisplaySvg /> },
     { componentName: "feedback", componentSvg: <FeedbackSvg /> },
@@ -42,25 +74,38 @@ const FilterSideBar = ({
     { componentName: "layouts", componentSvg: <LayoutSvg /> },
   ];
 
-  const categories = Object.fromEntries(
-    componentCategories?.map((category) => [category, false])
-  );
-
   const { setShowFilterSideBar, showFilterSideBar } = showFilterSideBarState;
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const router = useRouter();
   const pathname = usePathname();
-
-  const { register, handleSubmit, reset, formState } =
-    useForm<typeof categories>();
-
-  const [pendingFilters, setPendingFilters] = useState<string[]>([]);
-
   const hasParams = params.get("category") === null ? false : true;
 
-  const onSubmit: SubmitHandler<typeof categories> = () => {
+  const [pendingFilters, setPendingFilters] = useState<string[]>([]);
+  const { register, handleSubmit, reset, formState } = useForm<Inputs>();
+
+  useEffect(() => {
+    if (showFilterSideBar) disableBodyScroll(document.body);
+
+    if (!showFilterSideBar) enableBodyScroll(document.body);
+  }, [showFilterSideBar]);
+
+  useEffect(() => {
+    const handleClick = (e: Event) => {
+      const targetEl = e.target as Element;
+
+      const filterSideBar = document.body.querySelector("#filter-side-bar");
+
+      if (!filterSideBar?.contains(targetEl)) setShowFilterSideBar(false);
+    };
+
+    if (showFilterSideBar) document.body.addEventListener("click", handleClick);
+
+    return () => document.body.removeEventListener("click", handleClick);
+  }, [showFilterSideBar, setShowFilterSideBar]);
+
+  const onSubmit: SubmitHandler<Inputs> = () => {
     const activeFilters = pendingFilters;
     let toastMessage = "";
 
@@ -92,39 +137,19 @@ const FilterSideBar = ({
     reset();
   };
 
-  const handleClick = () => {
+  const handleClose = () => {
     setShowFilterSideBar(false);
   };
 
-  const handlePendingFilterRemove = (category: string) => {
+  const handlePendingFilterRemove: handlePendingFiltersFn = (category) => {
     setPendingFilters((prevState) => [
       ...prevState.filter((pendingCategory) => pendingCategory !== category),
     ]);
   };
 
-  const handlePendingFilterAdd = (category: string) => {
+  const handlePendingFilterAdd: handlePendingFiltersFn = (category) => {
     setPendingFilters((prevState) => [...prevState, category]);
   };
-
-  useEffect(() => {
-    if (showFilterSideBar) disableBodyScroll(document.body);
-
-    if (!showFilterSideBar) enableBodyScroll(document.body);
-  }, [showFilterSideBar]);
-
-  useEffect(() => {
-    const handleClick = (e: Event) => {
-      const targetEl = e.target as Element;
-
-      const filterSideBar = document.body.querySelector("#filter-side-bar");
-
-      if (!filterSideBar?.contains(targetEl)) setShowFilterSideBar(false);
-    };
-
-    if (showFilterSideBar) document.body.addEventListener("click", handleClick);
-
-    return () => document.body.removeEventListener("click", handleClick);
-  }, [showFilterSideBar, setShowFilterSideBar]);
 
   return (
     <div
@@ -133,6 +158,12 @@ const FilterSideBar = ({
         !showFilterSideBar && "-translate-x-96"
       } z-30 fixed left-0 top-20 w-72 h-screen transition-all duration-300 bg-white`}
     >
+      <button className="absolute top-0 right-0 p-3" onClick={handleClose}>
+        <div className="[transform:rotate(45deg)]">
+          <Plus height={30} width={30} />
+        </div>
+      </button>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="relative">
           <div className="mt-16">
@@ -202,7 +233,7 @@ const FilterSideBar = ({
             hasParams && (
               <button
                 type="submit"
-                className="py-2 px-2 text-sm text-black text-opacity-85 bg-neutral-1 hover:border-primary-5 hover:text-primary-5 transition-colors duration-300 border border-opacity-5 mx-auto"
+                className="py-2 px-2 text-sm text-black text-opacity-85 bg-neutral-1 hover:border-danger hover:text-danger transition-colors duration-300 border border-opacity-5 mx-auto"
               >
                 Remove filters
               </button>
@@ -210,107 +241,8 @@ const FilterSideBar = ({
           )}
         </div>
       </form>
-
-      <button className="absolute top-0 right-0 p-3" onClick={handleClick}>
-        <div className="[transform:rotate(45deg)]">
-          <Plus height={30} width={30} />
-        </div>
-      </button>
     </div>
   );
 };
 
 export default FilterSideBar;
-
-const ButtonSvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <rect x="3" y="8" width="18" height="8" rx="2" ry="2" />
-  </svg>
-);
-
-const DataDisplaySvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3" />
-    <path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3" />
-    <line x1="4" y1="12" x2="20" y2="12" />
-  </svg>
-);
-const FeedbackSvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-  </svg>
-);
-const NavigationSvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-const LayoutItemSvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <line x1="3" y1="9" x2="21" y2="9" />
-  </svg>
-);
-const LayoutSvg = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-6 h-6"
-  >
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <line x1="3" y1="9" x2="21" y2="9" />
-    <line x1="9" y1="21" x2="9" y2="9" />
-  </svg>
-);

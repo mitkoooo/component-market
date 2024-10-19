@@ -34,6 +34,7 @@ const config: Config = {
         "neutral-11": "#1F1F1F",
         "neutral-12": "#141414",
         "neutral-13": "#000000",
+        danger: "#FF4D4F",
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],

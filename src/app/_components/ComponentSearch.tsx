@@ -12,13 +12,13 @@ type Inputs = {
 
 const ComponentSearch = (): React.JSX.Element => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<Inputs>();
   const { components, displayedComponents, setDisplayedComponents } =
     useComponents();
 
-  const [displayNumResults, setDisplayNumResults] = useState(false);
-
   const onSubmit: SubmitHandler<Inputs> = ({ searchInput }) => {
+    if (!searchInput) return;
+
     const newComponents = components?.filter((component) =>
       component.name.toLowerCase().includes(searchInput.toLowerCase())
     );
@@ -27,8 +27,7 @@ const ComponentSearch = (): React.JSX.Element => {
       newComponents !== undefined ? newComponents : components
     );
 
-    if (searchInput === "") setDisplayNumResults(false);
-    else setDisplayNumResults(true);
+    reset();
   };
 
   const handleClick = () => {
@@ -50,33 +49,28 @@ const ComponentSearch = (): React.JSX.Element => {
           }  bg-gray-900 transition-all absolute left-0 bottom-0 top-0 duration-300`}
         ></div>
 
-        <div className=" flex gap-2 ">
+        <div className="flex gap-3 mx-2 sm:mx-8 ">
           <button
             onClick={handleClick}
-            className="border-2 rounded-lg border-gray-300 p-1"
+            className="border border-black border-opacity-15 text-black text-opacity-85 rounded-sm p-1"
           >
             <SlidersHorizontal />
           </button>
-          <div className="rounded-lg w-full">
+          <div className="rounded-sm w-full">
             <Search
-              className="absolute pt-1 text-gray-400"
+              className="absolute pt-1 text-black text-opacity-85 "
               width="35"
               height="30"
             />
             <form onSubmit={handleSubmit(onSubmit)}>
               <input
                 {...register("searchInput")}
-                className="transition-all border-2 border-gray-300 rounded-lg w-full p-1 pl-10 focus:font-semibold outline-none text-black duration-150 "
+                className="border border-black border-opacity-15 rounded-sm w-full p-1 pl-10 outline-none text-black "
                 placeholder="Search for components..."
               ></input>
             </form>
           </div>
         </div>
-        {displayNumResults && (
-          <h1 className="text-center text-sm font-light mt-3">
-            Found {displayedComponents?.length} results
-          </h1>
-        )}
       </div>
     </>
   );

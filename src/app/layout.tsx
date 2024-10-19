@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className="relative font-mono flex flex-col min-h-screen antialiased min-w-80 mt-[84px]">
         <Header />
 
-        <div className="font-sans">
+        <div className="font-sans bg-white">
           <Toaster />
         </div>
         <Suspense fallback={<></>}>
