@@ -13,8 +13,7 @@ type Inputs = {
 const ComponentSearch = (): React.JSX.Element => {
   const [showFilterSideBar, setShowFilterSideBar] = useState(false);
   const { register, handleSubmit, reset } = useForm<Inputs>();
-  const { components, displayedComponents, setDisplayedComponents } =
-    useComponents();
+  const { components, setDisplayedComponents } = useComponents();
 
   const onSubmit: SubmitHandler<Inputs> = ({ searchInput }) => {
     if (!searchInput) return;

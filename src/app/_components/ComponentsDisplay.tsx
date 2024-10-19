@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import ComponentCard from "./ComponentCard";
 import EmptyPage from "./EmptyPage";
 import { useComponents } from "../_context/ComponentsContext";
-import { useState } from "react";
 
 const ComponentsDisplay = (): React.JSX.Element => {
   let { displayedComponents } = useComponents();
