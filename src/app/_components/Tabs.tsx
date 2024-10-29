@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-type CodeFormat = "tsx" | "jsx";
+type CodeFormat = "tsx" | "preview";
 
 type TabsProps = {
   children: React.ReactNode;
@@ -62,7 +62,7 @@ function List({
     <ul
       className={`${
         className ?? ""
-      } flex justify-between items-center px-1 w-28 h-9 rounded-lg`}
+      } flex justify-between items-center px-1 w-28 h-9 rounded-sm`}
     >
       {" "}
       {Children.map(children, (child, index) => {
@@ -91,8 +91,10 @@ function Trigger({
 
   return (
     <button
-      className={`${className ?? ""} font-semibold py-1 px-3 rounded-md ${
-        active ? "bg-blue-600 text-white" : ""
+      className={`${
+        className ?? ""
+      } font-medium text-lg d py-2 mx-1 px-3 rounded-sm ${
+        active ? "bg-neutral-200 text-black " : "text-black text-opacity-80"
       }`}
       onClick={handleClick}
     >

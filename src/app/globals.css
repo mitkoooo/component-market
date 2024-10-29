@@ -25,3 +25,9 @@ body {
     text-wrap: balance;
   }
 }
+
+pre {
+  padding: 1rem;
+  overflow: scroll;
+  border-radius: 0.375rem;
+}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Component } from "../_ts/app-interfaces";
+import { convertNameToTitle } from "../_lib/helper";
 
 type ComponentCardProps = {
   component: Component;
@@ -34,7 +35,7 @@ const ComponentCard = ({
             isHovered ? "opacity-90" : "opacity-70"
           } transition-opacity`}
         >
-          {name}
+          {convertNameToTitle(name)}
         </h1>
 
         <p

@@ -5,7 +5,7 @@ type CardProps = {
 }; /* use `interface` if exporting so that consumers can extend */
 
 const Card = ({ children, className }: CardProps): React.JSX.Element => {
-  return <div className={`${className ?? ""} p-8`}>{children}</div>;
+  return <div className={`${className ?? ""}`}>{children}</div>;
 };
 
 export default Card;
@@ -17,7 +17,7 @@ function Title({
   className?: string;
   children: React.ReactNode;
 }) {
-  return <h1 className={`${className ?? ""} font-bold mb-4`}>{children}</h1>;
+  return <h1 className={`${className ?? ""} mb-4`}>{children}</h1>;
 }
 
 function Header({
@@ -37,7 +37,7 @@ function Description({
   className?: string;
   children: string;
 }) {
-  return <p className={`${className ?? ""} font-medium`}>{children}</p>;
+  return <p className={`${className ?? ""}`}>{children}</p>;
 }
 
 function Content({

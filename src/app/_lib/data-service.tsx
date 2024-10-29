@@ -1,6 +1,7 @@
 import { PostgrestError, PostgrestSingleResponse } from "@supabase/supabase-js";
 import { Component } from "../_ts/app-interfaces";
 import { supabase } from "./supabase";
+import ImageShowcase from "@/app/_components/ImageShowcase";
 
 type ComponentCategoryQuery = {
   category_name: string;
@@ -9,6 +10,12 @@ type ComponentCategoryQuery = {
 type getComponentsProps = {
   hasString?: string;
 };
+
+const componentPreviews: Array<{ name: string; preview: JSX.Element }> = [
+  { name: "image-showcase", preview: <ImageShowcase components={[]} /> },
+  { name: "tabs", preview: <></> },
+  { name: "burger-menu", preview: <></> },
+];
 
 export const getComponents = async (
   options: getComponentsProps = {}
@@ -56,4 +63,12 @@ export const getComponent = async (
   if (error) throw new Error(error.message);
 
   return data;
+};
+
+export const getComponentPreview = (name: string): JSX.Element => {
+  const [preview] = componentPreviews.filter(
+    (componentPreview) => componentPreview.name === name
+  );
+
+  return preview?.preview;
 };

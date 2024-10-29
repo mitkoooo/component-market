@@ -1,7 +1,11 @@
 import Card from "@/app/_components/Card";
 import CodeView from "@/app/_components/CodeView";
-import { getComponent } from "@/app/_lib/data-service";
-import { Code, Info, Play } from "lucide-react";
+import GithubLogo from "@/app/_components/GithubLogo";
+import { getComponent, getComponentPreview } from "@/app/_lib/data-service";
+import { codeToHtml } from "shiki";
+import Link from "next/link";
+import { ArrowDownLeft } from "lucide-react";
+import { convertNameToTitle } from "@/app/_lib/helper";
 
 type componentIdProps = {
   params: { componentId: number };
@@ -14,61 +18,45 @@ const Page = async ({
 
   if (!component) return <></>;
 
+  const html = await codeToHtml(component?.code_tsx, {
+    lang: "ts",
+    theme: "material-theme-palenight",
+  });
+
+  const title = convertNameToTitle(component.name);
+
   return (
     <div className="min-h-screen font-roboto text-opacity-85 bg-white">
-      <div className="container mx-auto px-4 py-8 relative">
-        <h1 className="text-4xl font-bold mb-12 text-center text-blue-900 relative z-10">
-          {component.name}
-          <span className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-2 bg-blue-300"></span>
+      <div className="container mx-auto py-8 relative">
+        <h1 className="text-2xl  mb-4 text-left relative z-10 font-semibold">
+          {title}
         </h1>
+        <p className="text-xl text-neutral-7">{component.description}</p>
+        <Link
+          className="flex gap-1 items-center my-4"
+          href={`https://github.com/mitkoooo/component-market/blob/main/src/app/_components/${title.replaceAll(
+            " ",
+            ""
+          )}.tsx`}
+        >
+          <GithubLogo height="20" width="20" />
+          <span className="underline text-center text-black text-opacity-50">
+            Source
+          </span>
+          <ArrowDownLeft
+            size={20}
+            className="text-black text-opacity-50 -rotate-180"
+          />
+        </Link>
 
-        <div className=" flex flex-col gap-8 relative">
-          <Card
-            id="description"
-            className="lg:col-span-2 bg-white shadow-xl z-10 transform hover:-translate-y-2 transition-all duration-300"
-          >
-            <Card.Header>
-              <Card.Title className="text-2xl text-blue-800 flex items-center">
-                <Info className="mr-2 h-6 w-6" />
-                Description
-              </Card.Title>
-              <Card.Description className="text-blue-600 text-lg">
-                {component.description}
-              </Card.Description>
-            </Card.Header>
-          </Card>
-
-          <Card
-            id="code"
-            className="lg:row-span-2 bg-white shadow-xl z-20 transform hover:-translate-y-2 transition-all duration-300"
-          >
-            <Card.Header>
-              <Card.Title className="text-2xl text-blue-800 flex items-center">
-                <Code className="mr-2 h-6 w-6" />
-                Code View
-              </Card.Title>
-            </Card.Header>
+        <div className=" flex flex-col gap-8 relative max-h-96">
+          <Card id="code" className="mt-6 lg:row-span-2 bg-white">
             <Card.Content>
               <CodeView
-                tsxCode={component.code_tsx}
-                jsxCode={component.code_jsx}
+                preview={getComponentPreview(component?.name)}
+                codeShowcase={html}
               />
             </Card.Content>
-          </Card>
-
-          <Card
-            id="demo"
-            className="lg:col-span-2 bg-white shadow-xl z-30 transform hover:-translate-y-2 transition-all duration-300"
-          >
-            <Card.Header>
-              <Card.Title className="text-2xl text-blue-800 flex items-center">
-                <Play className="mr-2 h-6 w-6" />
-                Interactive Demo
-              </Card.Title>
-              <Card.Description className="text-blue-600">
-                Interactive demo is unavailable at the moment
-              </Card.Description>
-            </Card.Header>
           </Card>
         </div>
       </div>

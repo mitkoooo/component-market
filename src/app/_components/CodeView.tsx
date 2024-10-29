@@ -1,39 +1,45 @@
 "use client";
 
 import Tabs from "./Tabs";
+import useInjectInnerHTML from "../_hooks/useInjectInnerHTML";
 
 type CodeViewProps = {
-  jsxCode: string;
-  tsxCode: string;
+  preview: JSX.Element;
+  codeShowcase: string;
 };
 
-const CodeView = ({ jsxCode, tsxCode }: CodeViewProps): React.JSX.Element => (
-  <Tabs defaultValue="jsx" className="w-full">
-    <Tabs.List className="mb-4 bg-blue-100">
-      <Tabs.Trigger
-        value="jsx"
-        className="text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-      >
-        JSX
-      </Tabs.Trigger>
-      <Tabs.Trigger
-        value="tsx"
-        className="text-sm data-[state=active]:bg-blue-600 data-[state=active]:text-white"
-      >
-        TSX
-      </Tabs.Trigger>
-    </Tabs.List>
-    <Tabs.Content value="jsx">
-      <pre className="bg-blue-900 p-4 rounded-md overflow-x-auto text-sm">
-        <code className="text-blue-100">{`${jsxCode}`}</code>
-      </pre>
-    </Tabs.Content>
-    <Tabs.Content value="tsx">
-      <pre className="bg-blue-900 p-4 rounded-md overflow-x-auto text-sm">
-        <code className="text-blue-100">{`${tsxCode}`}</code>
-      </pre>
-    </Tabs.Content>
-  </Tabs>
-);
+const CodeView = ({
+  codeShowcase,
+  preview,
+}: CodeViewProps): React.JSX.Element => {
+  useInjectInnerHTML([{ html: codeShowcase, divId: "codeShowcase" }]);
+
+  return (
+    <Tabs defaultValue="preview" className="w-full">
+      <Tabs.List className="mb-3">
+        <Tabs.Trigger
+          value="preview"
+          className="text-sm data-[state=active]:bg-neutral-300 data-[state=active]:text-white"
+        >
+          Preview
+        </Tabs.Trigger>
+        <Tabs.Trigger
+          value="tsx"
+          className="text-sm data-[state=active]:bg-neutral-300 data-[state=active]:text-white"
+        >
+          Code
+        </Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="preview">
+        <div className="w-full h-full border rouned-sm border-black border-opacity-5 flex items-end justify-end p-10">
+          {preview}
+        </div>
+      </Tabs.Content>
+      <Tabs.Content value="tsx">
+        <div id="codeShowcase"></div>
+      </Tabs.Content>
+    </Tabs>
+  );
+};
 
 export default CodeView;
