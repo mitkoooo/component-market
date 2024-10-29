@@ -40,7 +40,7 @@ const Page = async ({
           )}.tsx`}
         >
           <GithubLogo height="20" width="20" />
-          <span className="underline text-center text-black text-opacity-50">
+          <span className="underline text-center text-black text-opacity-50 ">
             Source
           </span>
           <ArrowDownLeft

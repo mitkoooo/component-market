@@ -6,7 +6,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Component } from "../_ts/app-interfaces";
 
 type ImageShowcaseProps = {
-  components?: Component[];
+  components: Component[];
 };
 
 export default function ImageShowcase({ components }: ImageShowcaseProps) {
