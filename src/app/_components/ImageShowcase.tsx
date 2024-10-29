@@ -6,11 +6,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Component } from "../_ts/app-interfaces";
 
 type ImageShowcaseProps = {
-  components: Component[];
+  components?: Component[];
 };
 
 export default function ImageShowcase({ components }: ImageShowcaseProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  if (components === undefined) components = [];
 
   const images = components.map((component) => component.image);
 
