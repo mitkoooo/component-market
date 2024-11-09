@@ -6,7 +6,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { ImageI } from "../_ts/app-interfaces";
 
 type ImageShowcaseProps = {
-  images: ImageI[];
+  images?: ImageI[];
   options?: {
     colors?: {
       dots: string;
