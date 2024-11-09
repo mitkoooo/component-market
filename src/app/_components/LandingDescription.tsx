@@ -2,11 +2,8 @@ import Link from "next/link";
 
 import RevealOnScroll from "@/app/_components/RevealOnScroll";
 import ImageShowcase from "./ImageShowcase";
-import { getComponents } from "../_lib/data-service";
 
 const LandingDescription = async (): Promise<React.JSX.Element> => {
-  const components = await getComponents();
-
   return (
     <div className="mt-32 w-full max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
       <div className="relative inline-block mx-8 sm:mx-12 my-8">
@@ -40,7 +37,28 @@ const LandingDescription = async (): Promise<React.JSX.Element> => {
       <div className="my-36 mx-auto w-80 md:w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 ">
         <RevealOnScroll>
           <div className="max-w-96 py-10 inline-flex items-center justify-center text-primary-foreground bg-primary rounded-lg px-6 shadow-lg mb-20 md:mb-0 w-full">
-            <ImageShowcase components={components ?? []} />
+            <ImageShowcase
+              images={[
+                {
+                  src: "/yosemite.jpeg",
+                  alt: "Yosemite Valley",
+                  description:
+                    "Yosemite National Park is in California's Sierra Nevada mountains. It's famed for its giant, ancient sequoia trees, and for Tunnel View, the iconic vista of towering Bridalveil Fall and the granite cliffs of El Capitan and Half Dome.",
+                },
+                {
+                  src: "/monument-valley.jpeg",
+                  alt: "Monument Valley",
+                  description:
+                    "Monument Valley, a red-sand desert region on the Arizona-Utah border, is known for the towering sandstone buttes of Monument Valley Navajo Tribal Park.",
+                },
+                {
+                  src: "/olympic-national-park.jpeg",
+                  alt: "Olympic National Park",
+                  description:
+                    "Olympic National Park is on Washington's Olympic Peninsula in the Pacific Northwest. The park sprawls across several different ecosystems, from the dramatic peaks of the Olympic Mountains to old-growth forests.",
+                },
+              ]}
+            />
           </div>
         </RevealOnScroll>
 

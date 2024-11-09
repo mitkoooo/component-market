@@ -28,10 +28,10 @@ const ComponentCard = ({
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="relative rounded-xl overflow-hidden border-2 border-gray-200 h-48 w-48 mx-auto"
+        className="relative rounded-md overflow-hidden border border-gray-200 h-48 w-48 mx-auto"
       >
         <h1
-          className={`z-10 pt-1 rounded-t-lg top-0 text-center font-semibold absolute bg-white  w-full h-8 ${
+          className={`z-10 pt-1 rounded-t-sm top-0 text-center font-semibold absolute bg-white  w-full h-8 ${
             isHovered ? "opacity-90" : "opacity-70"
           } transition-opacity`}
         >
@@ -39,7 +39,7 @@ const ComponentCard = ({
         </h1>
 
         <p
-          className={`absolute bottom-0 text-center font-base rounded-b-lg w-full bg-white transition-opacity duration-300 ${
+          className={`absolute bottom-0 text-center font-base rounded-b-sm w-full bg-white transition-opacity duration-300 ${
             isHovered ? "opacity-70" : "opacity-0"
           }`}
         >

@@ -3,38 +3,55 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { Component } from "../_ts/app-interfaces";
+import { ImageI } from "../_ts/app-interfaces";
 
 type ImageShowcaseProps = {
-  components?: Component[];
+  images: ImageI[];
+  options?: {
+    colors?: {
+      dots: string;
+      arrows: string;
+    };
+    size?: number;
+  };
 };
 
-export default function ImageShowcase({ components }: ImageShowcaseProps) {
+export default function ImageShowcase({ images, options }: ImageShowcaseProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  if (components === undefined) components = [];
+  if (!options) options = {};
 
-  const images = components.map((component) => component.image);
+  const defaultColors = {
+    arrows: "text-blue-600",
+    dots: "bg-blue-600",
+  };
 
-  const descriptions = components.map((component) => component.description);
+  if (!images) images = [];
+  if (!options?.colors) options.colors = defaultColors;
+  if (!options?.size) options.size = 36;
+
+  const numImages = images.length;
+
+  const descriptions = images.map((image) => image.description);
 
   const handleLeftClick = () => {
     if (activeImageIndex > 0) setActiveImageIndex((prevState) => --prevState);
 
-    if (activeImageIndex === 0) setActiveImageIndex(2);
+    if (activeImageIndex === 0) setActiveImageIndex(numImages - 1);
   };
 
   const handleRightClick = () => {
-    if (activeImageIndex < 2) setActiveImageIndex((prevState) => ++prevState);
+    if (activeImageIndex < numImages - 1)
+      setActiveImageIndex((prevState) => ++prevState);
 
-    if (activeImageIndex === 2) setActiveImageIndex(0);
+    if (activeImageIndex === numImages - 1) setActiveImageIndex(0);
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="relative flex border-2 mx-auto w-full h-48">
+    <div className="flex flex-col gap-6 h-[480px] w-72">
+      <div className="relative flex border-2 mx-auto w-full h-full">
         {images.map((img, i) => {
-          if (img === "null")
+          if (!img?.src)
             return (
               <p
                 className={`${activeImageIndex === i ? "" : "hidden"}`}
@@ -48,45 +65,50 @@ export default function ImageShowcase({ components }: ImageShowcaseProps) {
               <Image
                 className={`${activeImageIndex === i ? "" : "hidden"}`}
                 key={i}
-                alt={img}
-                src={img}
-                quality={100}
+                alt={img.alt}
+                src={img.src}
+                quality={70}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             );
         })}
       </div>
-      <p className="mx-auto w-72 h-14 text-sm text-center font-light text-wrap">
+      <p className="mx-auto h-full text-sm text-center font-light text-wrap">
         {descriptions.at(activeImageIndex)}
       </p>
 
-      <div className="justify-center flex gap-10 mb-4">
-        <ChevronLeftIcon
-          onClick={handleLeftClick}
-          className="transition-all ease-in-out hover:text-blue-600"
-          height="30"
-          width="30"
-        />
-        <ChevronRightIcon
-          onClick={handleRightClick}
-          className="transition-all ease-in-out hover:text-blue-600"
-          height="30"
-          width="30"
-        />
-      </div>
-      <div className="flex justify-center gap-2">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              activeImageIndex === i
-                ? "bg-blue-600 scale-125"
-                : "bg-gray-300 hover:bg-gray-400`"
-            }`}
-            onClick={() => setActiveImageIndex(i)}
-          />
-        ))}
-      </div>
+      {numImages > 1 && (
+        <>
+          <div className="justify-center flex gap-12">
+            <ChevronLeftIcon
+              onClick={handleLeftClick}
+              className={`transition-all ease-in-out hover:${options?.colors.arrows}`}
+              size={options.size}
+            />
+            <ChevronRightIcon
+              onClick={handleRightClick}
+              className={`transition-all ease-in-out hover:${options?.colors.arrows}`}
+              size={options.size}
+            />
+          </div>
+          <div className="flex justify-center gap-2 p-3">
+            {images.map((_, i) => {
+              return (
+                <button
+                  key={i}
+                  className={`h-2 w-2 rounded-full transition-all duration-300 ${
+                    activeImageIndex === i
+                      ? `${options.colors?.dots} scale-125`
+                      : "bg-gray-300 hover:bg-gray-400`"
+                  }`}
+                  onClick={() => setActiveImageIndex(i)}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }

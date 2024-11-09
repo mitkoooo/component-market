@@ -12,7 +12,33 @@ type getComponentsProps = {
 };
 
 const componentPreviews: Array<{ name: string; preview: JSX.Element }> = [
-  { name: "image-showcase", preview: <ImageShowcase components={[]} /> },
+  {
+    name: "image-showcase",
+    preview: (
+      <ImageShowcase
+        images={[
+          {
+            src: "/yosemite.jpeg",
+            alt: "Yosemite Valley",
+            description:
+              "Yosemite National Park is in California's Sierra Nevada mountains. It's famed for its giant, ancient sequoia trees, and for Tunnel View, the iconic vista of towering Bridalveil Fall and the granite cliffs of El Capitan and Half Dome.",
+          },
+          {
+            src: "/monument-valley.jpeg",
+            alt: "Monument Valley",
+            description:
+              "Monument Valley, a red-sand desert region on the Arizona-Utah border, is known for the towering sandstone buttes of Monument Valley Navajo Tribal Park.",
+          },
+          {
+            src: "/olympic-national-park.jpeg",
+            alt: "Olympic National Park",
+            description:
+              "Olympic National Park is on Washington's Olympic Peninsula in the Pacific Northwest. The park sprawls across several different ecosystems, from the dramatic peaks of the Olympic Mountains to old-growth forests.",
+          },
+        ]}
+      />
+    ),
+  },
   { name: "tabs", preview: <></> },
   { name: "burger-menu", preview: <></> },
 ];

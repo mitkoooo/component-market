@@ -30,8 +30,8 @@ const CodeView = ({
           Code
         </Tabs.Trigger>
       </Tabs.List>
-      <Tabs.Content value="preview">
-        <div className="w-full h-full border rouned-sm border-black border-opacity-5 flex items-end justify-end p-10">
+      <Tabs.Content value="preview" className="m-12">
+        <div className="w-full h-full border rouned-sm border-black border-opacity-10 flex items-end justify-end p-10">
           {preview}
         </div>
       </Tabs.Content>

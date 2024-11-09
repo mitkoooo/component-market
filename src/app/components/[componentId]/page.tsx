@@ -26,9 +26,9 @@ const Page = async ({
   const title = convertNameToTitle(component.name);
 
   return (
-    <div className="min-h-screen font-roboto text-opacity-85 bg-white">
-      <div className="container mx-auto py-8 relative">
-        <h1 className="text-2xl  mb-4 text-left relative z-10 font-semibold">
+    <div className="p-3 sm:p-2 md:p-0 min-h-screen font-roboto text-opacity-85 bg-white">
+      <div className="container mx-auto py-8 relative ">
+        <h1 className="text-2xl  mb-4 text-left relative font-semibold">
           {title}
         </h1>
         <p className="text-xl text-neutral-7">{component.description}</p>

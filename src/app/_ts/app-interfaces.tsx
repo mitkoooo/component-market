@@ -13,3 +13,9 @@ export interface Component {
   code_jsx: string;
   category_name: string;
 }
+
+export interface ImageI {
+  alt: string;
+  src: string;
+  description: string;
+}
