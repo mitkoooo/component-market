@@ -10,6 +10,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    appDir: true,
+    serverComponentsExternalPackages: ["vscode-oniguruma", "shiki"],
+  },
 };
 
 export default nextConfig;

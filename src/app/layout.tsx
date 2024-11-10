@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/_styles/globals.css";
 import Footer from "./_components/Footer";
 import Header from "./_components/Header";
 import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
+import Spinner from "./_components/Spinner";
 
 export const metadata: Metadata = {
   title: "component-market",
@@ -23,7 +24,13 @@ export default function RootLayout({
         <div className="font-sans">
           <Toaster />
         </div>
-        <Suspense fallback={<></>}>
+        <Suspense
+          fallback={
+            <div className="h-screen flex items-center">
+              <Spinner />
+            </div>
+          }
+        >
           <main className="min-h-screen h-full">{children}</main>
         </Suspense>
 
