@@ -2,7 +2,7 @@ import Card from "@/app/_components/Card";
 import CodeView from "@/app/_components/CodeView";
 import GithubLogo from "@/app/_components/GithubLogo";
 import { getComponent, getComponentPreview } from "@/app/_lib/data-service";
-import { codeToHtml } from "shiki";
+import { highlight } from "@/app/_lib/shiki";
 import Link from "next/link";
 import { ArrowDownLeft } from "lucide-react";
 import { convertNameToTitle } from "@/app/_lib/helper";
@@ -18,10 +18,7 @@ const Page = async ({
 
   if (!component) return <></>;
 
-  const html = await codeToHtml(component?.code_tsx, {
-    lang: "ts",
-    theme: "material-theme-palenight",
-  });
+  const html = await highlight(component?.code_tsx, "ts");
 
   const title = convertNameToTitle(component.name);
 
