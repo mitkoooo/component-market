@@ -1,7 +1,6 @@
 "use client";
 
 import Tabs from "./Tabs";
-import useInjectInnerHTML from "../_hooks/useInjectInnerHTML";
 
 type CodeViewProps = {
   preview: JSX.Element;
@@ -12,8 +11,6 @@ const CodeView = ({
   codeShowcase,
   preview,
 }: CodeViewProps): React.JSX.Element => {
-  useInjectInnerHTML([{ html: codeShowcase, divId: "codeShowcase" }]);
-
   return (
     <Tabs defaultValue="preview" className="w-full">
       <Tabs.List className="mb-3">
@@ -36,7 +33,7 @@ const CodeView = ({
         </div>
       </Tabs.Content>
       <Tabs.Content value="tsx">
-        <div id="codeShowcase"></div>
+        <div dangerouslySetInnerHTML={{ __html: codeShowcase }}></div>
       </Tabs.Content>
     </Tabs>
   );
